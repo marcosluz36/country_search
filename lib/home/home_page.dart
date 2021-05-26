@@ -1,3 +1,4 @@
+import 'package:country_search/home/widgets/dialog_filter.dart';
 import 'package:country_search/services/rest_countries.dart';
 import 'package:country_search/home/widgets/country_card.dart';
 import 'package:flutter/material.dart';
@@ -41,28 +42,24 @@ class _HomePageState extends State<HomePage> {
         title: Text("Países"),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: GestureDetector(
-              onTap: () {
-              },
-              child: Icon(
-                Icons.search,
-                size: 26.0,
-              ),
-            ),
+          IconButton(
+            icon: Icon(Icons.filter_alt_outlined),
+            padding: const EdgeInsets.only(right: 10.0),
+            onPressed: () {
+              showDialog(context: context, builder: (BuildContext context) {
+                return DialogFilter(
+                  onSubmit: _filterCountryInfo,
+                );
+              });
+            }
           )
         ],
       ),
       body: Container(
-        child: ListView.builder(
-          itemCount: countryInfo.length,
-          itemBuilder: (context, index) {
-            return CountryCard(
-              country: countryInfo[index],
-            );
-          },
-        )
+        padding: EdgeInsets.only(
+          top: 15.0,
+        ),
+        child: widgetCondition()
       ),
     );
   }
