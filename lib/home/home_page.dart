@@ -11,13 +11,19 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> countryInfo = [];
+  RestCountries _restCountries = RestCountries();
 
   void _restCountriesSetup() async {
-    RestCountries instance = RestCountries();
-    await instance.getCountries();
-
+    await _restCountries.getAllCountries();
     setState(() {
-      countryInfo = instance.countries;
+      countryInfo = _restCountries.countries;
+    });
+  }
+
+  void _filterCountryInfo(List<String> filter) {
+    _restCountries.filterCountries(filter);
+    setState(() {
+      countryInfo = _restCountries.countries;
     });
   }
 
