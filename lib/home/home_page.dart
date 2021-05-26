@@ -28,6 +28,60 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Widget countryListView() {
+    return ListView.builder(
+      itemCount: countryInfo.length,
+      itemBuilder: (context, index) {
+        return CountryCard(
+          country: countryInfo[index],
+        );
+      },
+    );
+  }
+
+  Widget filterNotFound() {
+    return Center(
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+            horizontal: 30.0
+        ),
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Column(
+          children: <Widget>[
+            Image(
+              fit: BoxFit.fitHeight,
+              height: 180,
+              image: NetworkImage("https://image.flaticon.com/icons/png/512/1794/1794725.png"),
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'Filtro sem resultados!',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 25.0,
+                  fontWeight: FontWeight.w700
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget widgetCondition() {
+    if (_restCountries.hasInfo && countryInfo.length > 0) {
+      return countryListView();
+    }
+
+    else if (_restCountries.hasInfo && countryInfo.length == 0) {
+      return filterNotFound();
+    }
+
+    else {
+      return Container();
+    }
+  }
+
   @override
   void initState() {
     _restCountriesSetup();
